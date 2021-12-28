@@ -1,3 +1,4 @@
+import 'package:first_flutter/screens/analyze.dart';
 import 'package:first_flutter/screens/home.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,14 @@ class MyApp extends StatelessWidget {
         primarySwatch:  Colors.yellow,
         visualDensity: VisualDensity.adaptivePlatformDensity
       ),
-      home: const HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/': (context) => const HomeScreen(),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/second': (context) => const AnalyzeScreen(),
+      },
     );
   }
 }
+

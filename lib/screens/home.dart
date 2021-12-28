@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:first_flutter/constants/app_constants.dart';
+import 'package:first_flutter/screens/analyze.dart';
 import 'package:first_flutter/widgets/left_bar.dart';
 import 'package:first_flutter/widgets/right_bar.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,27 @@ class HomeScreen extends StatefulWidget {
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
+}
+
+class AnalyzeScreenRoute extends StatelessWidget {
+  const AnalyzeScreenRoute({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('First Route'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Open route'),
+          onPressed: () {
+            // Navigate to second route when tapped.
+          },
+        ),
+      ),
+    );
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -144,14 +168,31 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 10,
             ),
             const RightBar(barWidth: 47),
-            const SizedBox( height: 16,),
-
+            const SizedBox(
+              height: 16,
+            ),
             Container(
               alignment: Alignment.bottomCenter,
               child: const Text(
                 "Aplicație elaborată de Daniel Maga. Prima mea aplicație pe flutter și dart, m-am inspirat puțin de pe net",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white),
               ),
+            ),
+            const SizedBox(height: 17),
+            ButtonBar(
+              children: [
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/second');
+                    },
+                    child: const Text(
+                      'next',
+                      style: TextStyle(color: Colors.white),
+                    ))
+              ],
             )
           ],
         ),

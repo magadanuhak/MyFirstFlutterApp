@@ -11,12 +11,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  double resultWeight = 0;
+  String textResult = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Daniel's first flutter app",
+          "Calculator obezitate",
           style: TextStyle(color: accentColor, fontWeight: FontWeight.w300),
         ),
         backgroundColor: Colors.transparent,
@@ -36,16 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   width: 130,
                   child: TextField(
+                    controller: _heightController,
                     style: TextStyle(
-                        fontSize: 42,
+                        fontSize: 25,
                         fontWeight: FontWeight.w300,
                         color: accentColor),
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Height",
+                        hintText: "Înălțime",
                         hintStyle: TextStyle(
-                            fontSize: 42,
+                            fontSize: 25,
                             fontWeight: FontWeight.w300,
                             color: Colors.white.withOpacity(.8))),
                   ),
@@ -53,44 +59,100 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   width: 130,
                   child: TextField(
+                    controller: _weightController,
                     style: TextStyle(
-                        fontSize: 42,
+                        fontSize: 25,
                         fontWeight: FontWeight.w300,
                         color: accentColor),
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Weight",
+                        hintText: "Greutate",
                         hintStyle: TextStyle(
-                            fontSize: 42,
+                            fontSize: 25,
                             fontWeight: FontWeight.w300,
                             color: Colors.white.withOpacity(.8))),
                   ),
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
+            ),
+            GestureDetector(
+              onTap: () {
+                double _h = double.parse(_heightController.text);
+                double _w = double.parse(_weightController.text);
+                setState(() {
+                  resultWeight = _w / (_h * _h);
+
+                  if (resultWeight > 25) {
+                    textResult = "Ești obez";
+                  } else if (resultWeight >= 18.5 && resultWeight < 25) {
+                    textResult = "Ai o masă normală";
+                  } else {
+                    textResult = "Ar fi bine ca să te mai îngrași";
+                  }
+                });
+              },
+              child: Text(
+                "Calculează",
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: accentColor),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
             ),
             Container(
               child: Text(
-                "Calculate",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: accentColor),
+                resultWeight.toStringAsFixed(2),
+                style: TextStyle(fontSize: 25, color: accentColor),
               ),
             ),
-            SizedBox(height: 50,),
-            Container(
-              child: Text("10", style: TextStyle(fontSize: 90, color:accentColor),),
+            const SizedBox(
+              height: 30,
             ),
-            SizedBox(height: 30,),
-            Container(
-              child: Text("Normal weight", style: TextStyle(fontSize: 90, color:accentColor),),
+            Visibility(
+              visible: textResult.isNotEmpty,
+              child: Container(
+                child: Text(
+                  textResult,
+                  style: TextStyle(fontSize: 25, color: accentColor),
+                ),
+              ),
             ),
-            SizedBox(height: 10,),
-            LeftBar(barWidth: 40),
-            SizedBox(height: 20,),
-            LeftBar(barWidth: 70),
+            const SizedBox(
+              height: 10,
+            ),
+            const LeftBar(barWidth: 40),
+            const SizedBox(
+              height: 10,
+            ),
+            const LeftBar(barWidth: 120),
+            const SizedBox(
+              height: 10,
+            ),
+            const LeftBar(barWidth: 70),
+            const SizedBox(
+              height: 10,
+            ),
+            const RightBar(barWidth: 30),
+            const SizedBox(
+              height: 10,
+            ),
+            const RightBar(barWidth: 47),
+            const SizedBox( height: 16,),
 
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: const Text(
+                "Aplicație elaborată de Daniel Maga. Prima mea aplicație pe flutter și dart, m-am inspirat puțin de pe net",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.white),
+              ),
+            )
           ],
         ),
       ),
